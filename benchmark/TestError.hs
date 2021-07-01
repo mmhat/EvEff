@@ -6,7 +6,7 @@ License     : MIT
 Maintainer  : xnning@hku.hk; daan@microsoft.com
 Stability   : Experimental
 
-Original benchmark from 
+Original benchmark from
 -}
 module TestError where
 
@@ -40,7 +40,7 @@ errorMonadic n = either id id $ errMonadic n
 
 errMonadic :: Me.MonadError Int m => Int -> m Int
 errMonadic n = foldM f 1 (list n)
-             where 
+             where
                f acc 0 = Me.throwError (0::Int)
                f acc x = return (acc * x)
 
@@ -49,27 +49,27 @@ errorEE n = either id id $ EE.run $ EEe.runError $ errEE n
 
 errEE :: (EE.Member (EEe.Exc Int) e) => Int -> EE.Eff e Int
 errEE n = foldM f 1 (list n)
-        where 
+        where
          f acc 0 = EEe.throwError (0::Int)
-         f acc x = return (acc * x) 
- 
+         f acc x = return (acc * x)
+
 
 errorF :: Int -> Int
 errorF n = either id id $ F.run $ Fe.runError $ errF n
 
 errF :: (F.Has (Fe.Error Int) sig m ) => Int -> m Int
 errF n = foldM f 1 (list n)
-       where 
+       where
          f acc 0 = Fe.throwError (0::Int)
          f acc x = return (acc * x)
 
 errorEff :: Int -> Int
 errorEff n = either id id $ runEff $ E.exceptEither $ errEff n
-  
+
 errEff :: (E.Except Int :? e) => Int -> Eff e Int
 errEff n = foldM f 1 (list n)
          where
-          f acc 0 = perform E.throwError (0::Int)
+          f acc 0 = perform (\h -> E.throwError h) (0::Int)
           f acc x = return (acc * x)
 
 

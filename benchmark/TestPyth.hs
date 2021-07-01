@@ -13,7 +13,7 @@ License     : MIT
 Maintainer  : xnning@hku.hk; daan@microsoft.com
 Stability   : Experimental
 
-Described in /"Effect Handlers in Haskell, Evidently"/, Ningning Xie and Daan Leijen, Haskell 2020. 
+Described in /"Effect Handlers in Haskell, Evidently"/, Ningning Xie and Daan Leijen, Haskell 2020.
 Original benchmark from
 /"Freer Monads, More Extensible Effects"/, Oleg Kiselyov and Hiromi Ishii, Haskell 2015.
 
@@ -170,7 +170,7 @@ epyth upbound = do
   x <- perform choose upbound
   y <- perform choose upbound
   z <- perform choose upbound
-  if (x*x + y*y == z*z) then return (x,y,z) else perform none ()
+  if (x*x + y*y == z*z) then return (x,y,z) else perform (\h -> none h) ()
 
 runPythEff :: Int -> ([(Int,Int,Int)])
 runPythEff n = runEff $ chooseAll $ epyth n
@@ -186,7 +186,7 @@ epythState upbound = do
   z <- perform choose upbound
   cnt <- perform get ()
   perform put (cnt + 1 :: Int)
-  if (x*x + y*y == z*z) then return (x,y,z) else perform none ()
+  if (x*x + y*y == z*z) then return (x,y,z) else perform (\h -> none h) ()
 
 pythEffState :: Int -> Int
 pythEffState n = length $ runEff $ state (0::Int) $ chooseAll $ epythState n

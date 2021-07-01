@@ -157,11 +157,11 @@ chooseAll
           }
 
 instance (Choose :? e) => Alternative (Eff e) where
-  empty      = perform none ()
+  empty      = perform (\h -> none h) ()
   m1 <|> m2  = do x <- perform choose 2
                   if (x==1) then m1 else m2
 
 instance (Choose :? e) => MonadPlus (Eff e) where
-  mzero       = perform none ()
+  mzero       = perform (\h -> none h) ()
   mplus m1 m2 = do x <- perform choose 2
                    if (x==1) then m1 else m2

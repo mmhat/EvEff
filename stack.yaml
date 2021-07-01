@@ -1,13 +1,7 @@
-resolver: lts-14.2
-
-packages: ['.']
-extra-deps: [
-    extensible-effects-5.0.0.1
-  , fused-effects-1.0.2.0
-]
-
+resolver: nightly-2021-07-01
+packages:
+  - .
+extra-deps: []
 flags: {}
-
 extra-package-dbs: []
-
 arch: x86_64
